@@ -1,3 +1,5 @@
+import re
+
 with open('day2_input.txt') as f:
     instructionsList = f.read()
 
@@ -42,5 +44,37 @@ def Intcode (instructionsList):
 
     return instructionsList, predictionList
 
+def chunks(lst, n):
+    """
+        Yield successive n-sized chunks from lst.
+        You could use  [lst[i:i + n] for i in range(0, len(lst), n)] instead
+    """
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
+
+
+def explode(s, keywords):
+    for k in keywords:
+        m = re.search(r'(%s~[^~]*)(?:~|$)' % (re.escape(k),), s)
+        yield m and m.group(1)
+
+
+def invIntcode(instructionsList):
+    """
+    Calculate noun and verb that give a determine what pair of inputs produces the output 19690720.
+    """
+    chunkedinstructions = [instruction for instruction in chunks(instructionsList,4)]
+    chunkedinstructions.reverse()
+    
+    for instructions in chunkedinstructions:
+        print(instructions)
+
+
+
+
+
 instructions, predictions = Intcode(instructionsList)
 print('Day2:\n{}\n{}'.format(str(instructions),str(predictions)))
+invIntcode(instructionsList)
+
+
