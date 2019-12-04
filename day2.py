@@ -1,5 +1,3 @@
-import re
-
 with open('day2_input.txt') as f:
     instructionsList = f.read()
 
@@ -42,15 +40,18 @@ def Intcode (instructionsList, noun = 12, verb = 2):
     return instructionsList
 
 
-print('Day2:\n{}\n{}'.format(str(instructions),str(predictions)))
-invIntcode(instructionsList)
 
-for ii = range(100):
-    for jj = range(100):
+instructions = Intcode(instructionsList)
+print('Day2:\n{}\n'.format(str(instructions[0])))
+print(len())
+
+
+for ii in range(100):
+    for jj in range(100):
         instructions = Intcode(instructionsList, ii, jj)
-            if instrunctions[0] == 19690720:
-                print(str(ii)+str(jj))
-                break
+        if instrunctions[0] == 19690720:
+            print(str(ii)+str(jj))
+            break
 
 
 
