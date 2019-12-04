@@ -71,7 +71,7 @@ target/
 
 # Pycharm
 .idea/
-venv/
+*.xml
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -106,3 +106,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+*.xml
+*.xml
+*.xml
