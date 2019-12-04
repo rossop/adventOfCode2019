@@ -1,32 +1,23 @@
 
-for num in range(start,end+1):
-    password = str(num)
-    double_cond = False
-    order_cond = True
-    no_repeat_cond = False
-    checked = False
-    unique_double = False
-    for ii in range(len(password)-1):
-        if int(password[ii]) > int(password[ii+1]):
-            order_cond = order_cond and False
-            break
-        elif int(password[ii]) == int(password[ii+1]):
-            double_cond = double_cond or True
-            try:
-                if int(password[ii+2]) == int(password[ii]):
-                    no_repeat_cond = no_repeat_cond or True
-                    unique_double = False
-                    break
-                else:
-                    if not(checked):
-                        checked = True
-                        unique_double = unique_double or True
 
-            except:
-                continue
-        else:
-            continue
+pw_range = (273025,767253)
 
-    if double_cond and order_cond and unique_double:
-        count += 1
-        print (count)
+def pw_check(int_num):
+    '''
+    This is a more elegant solution aided by different reddits
+    :param int_num: Integer number
+    :return: count of adjacecies or False if the pw does not satisfy conditions
+    '''
+    digits = [int(x) for x in str(int_num)]
+    adj_same = {}
+    for idx, val in enumerate(digits):
+        if idx + 1 < len(digits) and val == digits[idx + 1]:
+            if val not in adj_same.keys():
+                adj_same[val] = 0
+            adj_same[val] += 1
+        if idx + 1 < len(digits) and val > digits[idx + 1]:
+            return False
+    return list(adj_same.values()) or False
+
+print(len([x for x in range(*pw_range) if pw_check(x)]))  # Part1
+print(len([x for x in range(*pw_range) if pw_check(x) and 1 in pw_check(x)]))  # Part2
