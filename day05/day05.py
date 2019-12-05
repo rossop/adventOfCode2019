@@ -7,7 +7,7 @@ def download_input():
     :return: input as list
     """
     link = "https://adventofcode.com/2019/day/5/input"
-    with urllib.url(link) as f:
+    with urllib.request.urlopen(link) as f:
         input = f.read()
         print(input)
     ##
@@ -62,3 +62,4 @@ def run_program(insList, noun = 12, verb = 2):
 
 
     return insList
+download_input()
