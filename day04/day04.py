@@ -1,5 +1,3 @@
-
-
 pw_range = (273025,767253)
 
 def pw_check(int_num):
