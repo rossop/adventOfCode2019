@@ -35,31 +35,41 @@ def run_program(insList, noun = 12, verb = 2):
     """
     insList[1] = noun
     insList[2] = verb
+    fixed_in = 5
     it = 0
     while it < len(insList):
+
         opcode = insList[it]
-        op1 = insList[insList[it + 1]]
-        op2 = insList[insList[it + 2]]
-        dest = insList[it + 3]
-        if opcode == 99:
+        if opcode is 99:
             break
-        else:
-            if opcode == 1:
+
+        elif opcode is 1 or opcode is 2:
+            op1 = insList[insList[it + 1]]
+            op2 = insList[insList[it + 2]]
+            dest = insList[it + 3]
+
+            if opcode is 1:
                 insList[dest] = op1 + op2
-                it += 4
-
-            elif opcode == 2:
-                insList[dest] = op1 * op2
-                it += 4
-
-            elif opcode == 3:
-                dest = inslist[it+1]
-                inslist[dest] = dest
-
             else:
-                print('ERROR: undefined opcode')
-                break
+                insList[dest] = op1 * op2
+            it += 4
 
+        elif opcode is 3:
+            op = fixed_in #input('Chose a number between 1 and 5')
+            dest = insList[it+1]
+            insList[dest] = op
+            it += ??
+
+         elif opcode is 4:
+            pos = insList[it+1]
+            output = insList[pos]
+            print(output)
+
+        else:
+            print('ERROR: undefined opcode')
+            break
+
+# TODO: Add Parameter mode
 
     return insList
 download_input()
