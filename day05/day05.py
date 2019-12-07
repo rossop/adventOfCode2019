@@ -17,7 +17,7 @@ def read_input():
     Read input from a text file
     :return: :insList: list of instructions
     """
-    with open('day5_input.txt') as f:
+    with open('day05_input.txt') as f:
         insList = list(map(int, f.read().rstrip('\n').split(",")))
 
     return insList
