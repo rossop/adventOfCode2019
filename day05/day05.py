@@ -17,6 +17,10 @@ class IntCode():
             2: [self.op_mul, [0, 0, 1]],  # day03
             3: [self.op_input, [1]],
             4: [self.op_output, [0]],
+            5: [self.op_jump_if_true, [0, 0]],
+            6: [self.op_jump_if_false, [0, 0]],
+            7: [self.op_lt, [0, 0, 1]],
+            8: [self.op_eq, [0, 0, 1]],
             99: [self.op_halt, []]
         }
         self.fetchers = [
@@ -82,6 +86,35 @@ class IntCode():
         self.inc()
         return True
 
+    def op_jump_if_true(self, params):
+        comp, addr = params
+        if comp:
+            self.ptr = addr
+        else:
+            self.inc()
+        return True
+
+    def op_jump_if_false(self, params):
+        comp, addr = params
+        if not comp:
+            self.ptr = addr
+        else:
+            self.inc()
+        return True
+
+    def op_lt(self, params):
+        v1, v2, addr = params
+        self.mem[addr] = int(v1 < v2)
+        self.inc()
+        return True
+
+    def op_eq(self, params):
+        v1, v2, addr = params
+        self.mem[addr] = int(v1 == v2)
+        self.inc()
+        return True
+
+
     def op_halt(self, empty_params):
         return False
 
@@ -135,4 +168,5 @@ def download_input():
 
 ic = IntCode()
 ic.compute()
+print(ic.mem)
 
