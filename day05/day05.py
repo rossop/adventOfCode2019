@@ -10,6 +10,7 @@ class IntCode():
             self.mem = mem
 
         self.ptr = 0  # pointer value
+        self.out = 0
         self.ops = {
             # opcode: [ func, default param mode]
             # param modes are matched to self.fetchers
@@ -27,6 +28,7 @@ class IntCode():
             self.position_fetch,
             self.immediate_fetch
         ]
+        self.i = 5
 
     def read_input(self):
         """
@@ -75,14 +77,15 @@ class IntCode():
 
     def op_input(self, params):
         dest_addr = params.pop()
-        i = 1  # input("IntCode input> ")
+        i = self.i  # input("IntCode input> ")
         self.mem[dest_addr] = i
         self.inc()
         return True
 
     def op_output(self, params):
         out = params.pop()
-        print("   " + str(out))
+        # print("   " + str(out))
+        self.out = out
         self.inc()
         return True
 
@@ -145,13 +148,12 @@ class IntCode():
             params.append(self.fetchers[pm](raw))  # TODO ??
             self.inc()   # increases the pointer for each param
 
-        print(params)
         res = op_fun(params)  # op_fun will set pointer as desired
 
         if res:
             self.compute()
-        else:
-            print("___Intcode Halted ___")
+#         else:
+#             print("___Intcode Halted ___")
 
 
 def download_input():
@@ -165,8 +167,4 @@ def download_input():
         input = f.read()
         print(input)
 
-
-ic = IntCode()
-ic.compute()
-print(ic.mem)
 
