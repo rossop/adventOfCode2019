@@ -1,3 +1,6 @@
+import math
+from pprint import pprint
+
 def spiral_b(X, Y):
     x = y = 0
     dx = 0
@@ -10,14 +13,20 @@ def spiral_b(X, Y):
             dx, dy = -dy, dx
         x, y = x+dx, y+dy
 
-spiral_b(10,5)
+# spiral_b(10,5)
 
 
 def spiral(N, M):
+    """
+    Generator created by [] found on stackoverflow
+    :param N:
+    :param M:
+    :return:
+    """
     x,y = 0,0
     dx, dy = 0, -1
 
-    for dumb in xrange(N*M):
+    for dumb in range(N*M):
         if abs(x) == abs(y) and [dx,dy] != [1,0] or x>0 and y == 1-x:
             dx, dy = -dy, dx            # corner, change direction
 
@@ -27,3 +36,36 @@ def spiral(N, M):
 
         yield x, y
         x, y = x+dx, y+dy
+
+R = 3
+C = 5
+M = [[(row,col) for col in range(C)] for row in range(R)]
+
+pprint(M)
+print(M[1][1])
+
+def spiral(M,x,y):
+    m,n = s
+    return 0
+
+
+def sspiral(n):
+        k=math.ceil((math.sqrt(n)-1)/2)
+        t=2*k+1
+        m=t**2
+        t=t-1
+        if n>=m-t:
+            return [k-(m-n),-k]
+        else:
+            m=m-t
+
+        if n>=m-t:
+            return [-k,-k+(m-n)]
+        else:
+            m=m-t
+            if n>=m-t:
+                return [-k+(m-n),k]
+            else:
+                return [k,k-(m-n-t)]
+
+print(sspiral(9))
