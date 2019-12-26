@@ -1,29 +1,31 @@
 class Planet():
     def __init__(self,pos):
         self.pos = pos
+        self.newpos = [0, 0, 0]
         self.vel = [0, 0, 0]
         self.acc = [0, 0, 0]
 
         self.kin = 0
         self.pot = 0
-        self.energy = 0
-        print('{}  --  {}'.format(self.pos, self.vel))
+        self.en = 0
 
     def move(self,planets):
         for planet in planets:
             for val in range(3):
                 if self.pos != planet.pos:
-                    diff = self.pos[val] - planet.pos[val]
+                    diff = planet.pos[val]-self.pos[val]
                     if abs(diff)>0:
                         self.vel[val] +=(diff)//abs(diff)
 
-        self.pos = list(map(sum, zip(self.pos, self.vel)))
-        print('{}  --  {}'.format(self.pos, self.vel))
+        self.newpos = list(map(sum, zip(self.pos, self.vel)))
+
+    def update(self):
+        self.pos = self.newpos
 
     def energy(self):
         self.pot = sum(map(abs, self.pos))
         self.kin = sum(map(abs, self.vel))
-        self.energy = self.kin + self.pot
+        self.en = self.kin * self.pot
 
 positions = [[-1, 0, 2],
             [2, -10, -7],
@@ -33,11 +35,20 @@ positions = [[-1, 0, 2],
 planets = []
 for pos in positions:
     planets.append(Planet(pos))
-print('_______________' * 2)
 
 
-steps = 10
+steps = 100
 for ii in range(steps):
     for planet in planets:
         planet.move(planets)
-    print('_______________'*2)
+
+    for planet in planets:
+        planet.update()
+
+energy = 0
+
+for planet in planets:
+    planet.energy()
+    energy += planet.en
+
+print(energy)
