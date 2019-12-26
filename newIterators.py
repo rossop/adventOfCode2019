@@ -5,11 +5,7 @@ flatten = lambda l: [item for sublist in l for item in sublist]
 
 def spiral(matrix, CW = True, M = False,N = False):
     '''
-    # R, num of Rows - len(data)
-    # C, num of Cols - len(data[0])
-    # M, START row
-    # N, START column
-
+    iTERATOR Yields cordinates to a matrix so that it can be iterated spirally.
     :param matrix: matrix to be iterated over
     :param CW: Clockwise or anticlockwise direction
     :param M: Start Row
@@ -17,11 +13,11 @@ def spiral(matrix, CW = True, M = False,N = False):
     :return:
     '''
     flatten = lambda l: [item for sublist in l for item in sublist]
-    R = len(matrix)
-    C = len(matrix[0])
-    if M or N:
-        M = R//2
-        N = C//2
+    R = len(matrix)- 1
+    C = len(matrix[0]) - 1
+    # if not(M or N):
+    #     M = R//2
+    #     N = C//2
     check_matrix = [[False] * len(lst) for lst in matrix]
     m = M
     n = N
@@ -42,41 +38,57 @@ def spiral(matrix, CW = True, M = False,N = False):
     dir_r, dir_c = direction[dir]
 
     count = 1
+    break_count = 1
     while not all(flatten(check_matrix)):
-        print('{},{}'.format(m,n))
         (check_r, check_c) = direction[change_dir[dir]]
-        #print(direction[change_dir[dir]])
-        if True:
-            Turn = check_matrix[m + check_r][n + check_c]
-            #print(Turn)
-            if not Turn and count > 1:
+        print('{} : {},{} in {} by {}'.format(count, m, n, R + 1, C + 1))
+        if (0 <= m + check_r <= R) and (0 <= n + check_c <= C):
+            notTurn = check_matrix[m + check_r][n + check_c]
+            print(count)
+            if not notTurn and count > 1:
                 dir = change_dir[dir]
 
-            if (0 <= m <= R) and (0 <= n <= C):
-                # do something
+            if ((0 <= m <= R) and (0 <= n <= C)):
+                # print('{} : {},{} in {} by {}'.format(count, m, n, R + 1, C + 1))
+                matrix[m][n] = count
                 check_matrix[m][n] = True
-                #print(dir)
-                pp.pprint(check_matrix)
+                count += 1
 
             dir_r, dir_c = direction[dir]
             m, n = m + dir_r, n + dir_c
-            count += 1
+            break_count += 1
 
         else:
-            'skip to end of side'
+            try:
+                Turn = check_matrix[m + check_r][n + check_c]
+                print(Turn)
+            except:
+                Turn = False
 
-        # yield 'something'
+            if not Turn:
+                dir = change_dir[dir]
+                dir_r, dir_c = direction[dir]
 
-matrix = [[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15],[16,17,18,19,20]]
+            m, n = m + dir_r, n + dir_c
+            break_count += 1
 
-R = len(matrix)
-C = len(matrix[0])
-M = 2
-N = 2
+        if break_count > 30:
+            break
+
+
+    return check_matrix
+
+
+matrix = [[1,2,3,4,5], [6,7,8,9,10], [11,12,13,14,15], [16,17,18,19,20]]
+
+R = len(matrix) -1
+C = len(matrix[0])-1
+M = 0
+N = 4
 check_matrix = [[False ]*len(lst) for lst in matrix]
 m = M
 n = N
 
 CW = True
-
-spiral(matrix, CW, M ,N)
+res = spiral(matrix, CW, M ,N)
+pp.pprint(res)
