@@ -1,6 +1,3 @@
-import urllib
-
-
 class IntCode():
     # Updated to a class after reading @datagubbe.se Solution.
     # Opted for class after problem 7 asked to reuse intcode
@@ -155,11 +152,5 @@ class IntCode():
             self.compute()
         else:
             print("___Intcode Halted ___")
-            print(self.out)
-            print(self.op_output())
 
-with open('day05_input.txt') as f:
-    memory = list(map(int, f.read().rstrip('\n').split(",")))
 
-ic = IntCode(memory)
-ic.compute()
